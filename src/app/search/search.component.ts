@@ -120,8 +120,8 @@ export class SearchComponent implements OnInit, DoCheck {
           book => {
             const minPrice = this.filterQuery.minPrice;
             const maxPrice = this.filterQuery.maxPrice;
-            return (typeof minPrice === 'number' ? book.pages >= minPrice : true)
-              && (typeof maxPrice === 'number' ? book.pages <= maxPrice : true);
+            return (typeof minPrice === 'number' ? book.price >= minPrice : true)
+              && (typeof maxPrice === 'number' ? book.price <= maxPrice : true);
           }
         );
     }

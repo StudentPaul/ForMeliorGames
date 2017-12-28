@@ -38,6 +38,7 @@
           <label for="format" class="col-sm-3 col-form-label">Format</label>
           <div class="col-sm-7">
             <select class="form-control" id="format" name="format" [(ngModel)]="filterQuery.formatId">
+              <option [value]="'any'">Any</option>
               <option *ngFor="let format of formats" [value]="format.id">{{format.name}}</option>
             </select>
           </div>
@@ -50,7 +51,10 @@
 
               <label for="page-min" class="col-sm-6 col-form-label">Pages between</label>
               <div class="col-sm-6">
-                <input class="form-control" id="page-min" name="page-min" [(ngModel)]="filterQuery.minPages">
+                <input  class="form-control" id="page-min" name="page-min"
+                        type="number"
+                        [(ngModel)]="filterQuery.minPages"
+                >
               </div>
 
             </div>
@@ -61,7 +65,9 @@
 
               <label  class="col-sm-2 col-form-label text-center" for="page-max">and</label>
               <div class="col-sm-6">
-                <input class="form-control" id="page-max" name="page-max" [(ngModel)]="filterQuery.maxPages">
+                <input class="form-control" id="page-max" name="page-max"
+                       type="number"
+                       [(ngModel)]="filterQuery.maxPages">
               </div>
 
             </div>
@@ -76,7 +82,9 @@
 
               <label for="price-min" class="col-sm-6 col-form-label">Price between</label>
               <div class="col-sm-6">
-                <input class="form-control" id="price-min" name="price-min" [(ngModel)]="filterQuery.minPrice">
+                <input class="form-control" id="price-min" name="price-min"
+                       type="number"
+                       [(ngModel)]="filterQuery.minPrice">
               </div>
 
             </div>
@@ -87,7 +95,9 @@
 
               <label  class="col-sm-2 col-form-label text-center" for="price-max">and</label>
               <div class="col-sm-6">
-                <input class="form-control" id="price-max" name="price-max" [(ngModel)]="filterQuery.maxPrice">
+                <input class="form-control" id="price-max" name="price-max"
+                       type="number"
+                       [(ngModel)]="filterQuery.maxPrice">
               </div>
 
             </div>

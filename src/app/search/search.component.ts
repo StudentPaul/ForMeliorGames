@@ -71,28 +71,39 @@ export class SearchComponent implements OnInit, DoCheck {
         .filter(
           book => {
             const authorFilter = this.filterQuery.author;
-            return authorFilter ? book.author.match(new RegExp(authorFilter, 'i')) : true;
+            return authorFilter
+              ? (book.author ? book.author.match(new RegExp(authorFilter, 'i')) : false)
+              : true;
           }
         )
         // filter books by Title
         .filter(
           book => {
-            const titleFilter = this.filterQuery.title;
-            return titleFilter ? book.title.match(new RegExp(titleFilter, 'i')) : true;
+              const titleFilter = this.filterQuery.title;
+              return titleFilter
+                ? (book.title ? book.title.match(new RegExp(titleFilter, 'i')) : false)
+                : true;
           }
         )
         // filter books by ISBN
         .filter(
           book => {
             const isbnFilter = this.filterQuery.isbn;
-            return isbnFilter ? book.isbn.match(new RegExp(isbnFilter, 'i')) : true;
+            return isbnFilter
+              ? (book.isbn ? book.isbn.match(new RegExp(isbnFilter, 'i')) : false)
+              : true;
           }
         )
         // filter books by Pages
         .filter(
           book => {
-            const formatId = this.filterQuery.formatId;
-            return formatId ? book.formatId == formatId : true;
+            const formatFilterId = this.filterQuery.formatId;
+            if (formatFilterId === 'any') {
+              return true;
+            }
+            return formatFilterId
+              ? (book.formatId ? (+book.formatId === +formatFilterId) : false)
+              : true;
           }
         )
         // filter books by Pages
@@ -100,8 +111,8 @@ export class SearchComponent implements OnInit, DoCheck {
           book => {
             const minPages = this.filterQuery.minPages;
             const maxPages = this.filterQuery.maxPages;
-            return (minPages ? book.pages >= minPages : true)
-              && (maxPages ? book.pages <= maxPages : true);
+            return (typeof minPages === 'number' ? book.pages >= minPages : true)
+              && (typeof maxPages === 'number' ? book.pages <= maxPages : true);
           }
         )
         // filter books by Price
@@ -109,8 +120,8 @@ export class SearchComponent implements OnInit, DoCheck {
           book => {
             const minPrice = this.filterQuery.minPrice;
             const maxPrice = this.filterQuery.maxPrice;
-            return (minPrice ? book.pages >= minPrice : true)
-              && (maxPrice ? book.pages <= maxPrice : true);
+            return (typeof minPrice === 'number' ? book.pages >= minPrice : true)
+              && (typeof maxPrice === 'number' ? book.pages <= maxPrice : true);
           }
         );
     }

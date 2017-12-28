@@ -2,7 +2,7 @@
 
   <div class="row">
 
-    <div class="col-xs-4">
+    <div class="col-lg-4">
       <form>
 
         <h3 class="mb-4">Search</h3>
@@ -11,7 +11,7 @@
 
           <label for="author" class="col-sm-3 col-form-label">Author</label>
           <div class="col-sm-7">
-            <input class="form-control" id="author">
+            <input class="form-control" id="author" name="author" [(ngModel)]="filterQuery.author">
           </div>
 
         </div>
@@ -20,7 +20,7 @@
 
           <label for="title" class="col-sm-3 col-form-label">Title</label>
           <div class="col-sm-7">
-            <input class="form-control" id="title">
+            <input class="form-control" id="title" name="title" [(ngModel)]="filterQuery.title">
           </div>
 
         </div>
@@ -29,7 +29,7 @@
 
           <label for="isbn" class="col-sm-3 col-form-label">ISBN</label>
           <div class="col-sm-7">
-            <input class="form-control" id="isbn">
+            <input class="form-control" id="isbn" name="isbn" [(ngModel)]="filterQuery.isbn">
           </div>
 
         </div>
@@ -37,13 +37,8 @@
         <div class="form-group row">
           <label for="format" class="col-sm-3 col-form-label">Format</label>
           <div class="col-sm-7">
-            <select class="form-control" id="format">
-              <option>All</option>
-              <option>Paperback</option>
-              <option>Hardcover</option>
-              <option>Audiobook</option>
-              <option>Leather Bound</option>
-              <option>Spiral Bound</option>
+            <select class="form-control" id="format" name="format" [(ngModel)]="filterQuery.formatId">
+              <option *ngFor="let format of formats" [value]="format.id">{{format.name}}</option>
             </select>
           </div>
         </div>
@@ -55,7 +50,7 @@
 
               <label for="page-min" class="col-sm-6 col-form-label">Pages between</label>
               <div class="col-sm-6">
-                <input class="form-control" id="page-min">
+                <input class="form-control" id="page-min" name="page-min" [(ngModel)]="filterQuery.minPages">
               </div>
 
             </div>
@@ -66,7 +61,7 @@
 
               <label  class="col-sm-2 col-form-label text-center" for="page-max">and</label>
               <div class="col-sm-6">
-                <input class="form-control" id="page-max">
+                <input class="form-control" id="page-max" name="page-max" [(ngModel)]="filterQuery.maxPages">
               </div>
 
             </div>
@@ -81,7 +76,7 @@
 
               <label for="price-min" class="col-sm-6 col-form-label">Price between</label>
               <div class="col-sm-6">
-                <input class="form-control" id="price-min">
+                <input class="form-control" id="price-min" name="price-min" [(ngModel)]="filterQuery.minPrice">
               </div>
 
             </div>
@@ -92,7 +87,7 @@
 
               <label  class="col-sm-2 col-form-label text-center" for="price-max">and</label>
               <div class="col-sm-6">
-                <input class="form-control" id="price-max">
+                <input class="form-control" id="price-max" name="price-max" [(ngModel)]="filterQuery.maxPrice">
               </div>
 
             </div>
@@ -103,8 +98,9 @@
       </form>
     </div>
 
-    <div class="col-xs-8">
+    <div class="col-lg-8">
       <h3 class="mb-4">List of Matched Books</h3>
+      <app-book-list [books]="booksFiltered"></app-book-list>
     </div>
 
   </div>

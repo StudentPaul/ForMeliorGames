@@ -6,43 +6,76 @@
 
     <div class="form-group">
       <label for="author">Author</label>
-      <input class="form-control" id="author">
+      <input class="form-control" id="author" name="author" #author="ngModel"
+             [(ngModel)]="book.author" required>
+      <div [hidden]="!author.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="title">Title</label>
-      <input class="form-control" id="title">
+      <input class="form-control" id="title" name="title" #title="ngModel"
+             [(ngModel)]="book.title" required>
+      <div [hidden]="!title.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="isbn">ISBN</label>
-      <input class="form-control" id="isbn">
+      <input class="form-control" id="isbn" name="isbn" #isbn="ngModel"
+             [(ngModel)]="book.isbn" required>
+      <div [hidden]="!isbn.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="pages">Number of Pages</label>
-      <input class="form-control" id="pages">
+      <input class="form-control" id="pages" name="pages" #pages="ngModel"
+             [(ngModel)]="book.pages" required number [min]="1">
+      <div [hidden]="!pages.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
+      <div [hidden]="!pages.errors?.min" class="alert alert-danger">
+        <strong>Error!</strong> Minimum number of pages is 1.
+      </div>
+      <div [hidden]="!pages.errors?.number" class="alert alert-danger">
+        <strong>Error!</strong> Must be a number.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="format">Format</label>
-      <select class="form-control" id="format">
-        <option>Paperback</option>
-        <option>Hardcover</option>
-        <option>Audiobook</option>
-        <option>Leather Bound</option>
-        <option>Spiral Bound</option>
+      <select class="form-control" id="format" name="format" [(ngModel)]="book.formatId" #format="ngModel">
+        <option *ngFor="let format of formats" [value]="format.id">{{format.name}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea class="form-control" id="description" rows="3"></textarea>
+      <textarea class="form-control" id="description" rows="3" name="description" #description="ngModel" required
+                [(ngModel)]="book.description"></textarea>
+      <div [hidden]="!description.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="price">Price</label>
-      <input class="form-control" id="price">
+      <input class="form-control" id="price" name="price" #price="ngModel"
+             number [min]="0" required
+             [(ngModel)]="book.price">
+      <div [hidden]="!price.errors?.required" class="alert alert-danger">
+        <strong>Error!</strong> This field is required.
+      </div>
+      <div [hidden]="!price.errors?.min" class="alert alert-danger">
+        <strong>Error!</strong> Minimum price is 0.
+      </div>
+      <div [hidden]="!price.errors?.number" class="alert alert-danger">
+        <strong>Error!</strong> Must be a number.
+      </div>
     </div>
 
     <hr class="m-1 mb-5 mt-5">
@@ -51,32 +84,39 @@
 
     <div class="form-group">
       <label for="country">Country</label>
-      <select class="form-control" id="country">
-        <option>Country #1</option>
-        <option>Country #2</option>
-        <option>Country #3</option>
+      <select class="form-control" id="country" name="country" #countrySelect>
+        <option *ngFor="let country of countries" [value]="country.id">{{country.name}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="city">City</label>
-      <select class="form-control" id="city">
-        <option>City #1</option>
-        <option>City #2</option>
-        <option>City #3</option>
+      <select class="form-control" id="city" name="city" #citySelect [(ngModel)]="publisher.cityId">
+        <option *ngFor="let city of cities"
+                [hidden]="countrySelect.value != city.countryId"
+                [value]="city.id">
+          {{city.name}}
+        </option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="company">Company</label>
-      <select class="form-control" id="company">
-        <option>Company #1</option>
-        <option>Company #2</option>
-        <option>Company #3</option>
+      <select class="form-control" id="company" name="company" #publisherSelect
+              [(ngModel)]="book.publisherId">
+        <option *ngFor="let publisher of publishers"
+                [hidden]="citySelect.value != publisher.cityId"
+                [value]="publisher.id">
+          {{publisher.name}}
+        </option>
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    <button [disabled]="title.invalid||price.invalid
+    ||pages.invalid||isbn.invalid
+    ||description.invalid||author.invalid"
+            (click)="postBook()"
+            type="submit" class="btn btn-primary mt-4">Submit</button>
 
   </form>
 
